@@ -6,7 +6,8 @@
     "description": "50-100x faster JavaScript/TypeScript linter built in native Rust with zero-config setup.",
     "url": "https://oxc.rs",
     "license": "MIT",
-    "stars": "14.2k"
+    "stars": "14.2k",
+    "lastVerified": "2026-08-26T05:40:39.710Z"
   },
   {
     "id": "RES-02",
