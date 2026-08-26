@@ -1,0 +1,47 @@
+[
+  {
+    "id": "RES-01",
+    "name": "Oxlint Rust Linter",
+    "category": "TOOLING",
+    "description": "50-100x faster JavaScript/TypeScript linter built in native Rust with zero-config setup.",
+    "url": "https://oxc.rs",
+    "license": "MIT",
+    "stars": "14.2k"
+  },
+  {
+    "id": "RES-02",
+    "name": "Lucide Precision Vector Icons",
+    "category": "ASSETS",
+    "description": "Community-crafted 24px grid open-source icon set designed for crisp high-DPI interfaces.",
+    "url": "https://lucide.dev",
+    "license": "ISC",
+    "stars": "16.8k"
+  },
+  {
+    "id": "RES-03",
+    "name": "Biome Formatter & Analyzer",
+    "category": "TOOLING",
+    "description": "Unified toolchain for web projects providing sub-millisecond code formatting and imports sorting.",
+    "url": "https://biomejs.dev",
+    "license": "MIT",
+    "stars": "18.5k"
+  },
+  {
+    "id": "RES-04",
+    "name": "Valibot Lightweight Schema",
+    "category": "LIBRARIES",
+    "description": "Modular TypeScript-first validation library with ultra-small 600-byte bundle footprint.",
+    "url": "https://valibot.dev",
+    "license": "MIT",
+    "stars": "7.9k"
+  },
+  {
+    "id": "RES-05",
+    "name": "Geist Monospace Typeface",
+    "category": "TYPOGRAPHY",
+    "description": "Technical monospace font tailored for software engineers, terminals, and precision UIs.",
+    "url": "https://vercel.com/font",
+    "license": "OFL-1.1",
+    "stars": "9.1k"
+  }
+]

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "DIG-976",
+    "timestamp": "2026-08-26T05:21:07.654Z",
+    "category": "ARCH_PATTERN",
+    "tag": "SYSTEM_DESIGN",
+    "title": "Circuit Breaker State Machine with Exponential Fallback",
+    "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
+    "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
+    "language": "javascript",
+    "readTime": "3 MIN"
+  },
+  {
+    "id": "DIG-801",
+    "timestamp": "2026-08-26T08:15:00Z",
+    "category": "ARCH_PATTERN",
+    "tag": "SYSTEM_DESIGN",
+    "title": "Idempotent API Consumer Pattern in Distributed Queues",
+    "summary": "Implement message de-duplication at consumer boundaries using distributed Redis locks combined with deterministic hash keys.",
+    "code": "// Idempotency guard using distributed cache key\nasync function processEvent(event) {\n  const idempotencyKey = `evt_lock:${event.id}:${event.checksum}`;\n  const acquired = await redis.set(idempotencyKey, 'LOCKED', 'NX', 'EX', 300);\n  \n  if (!acquired) {\n    logger.warn(`[IDEMPOTENCY_SKIP] Event ${event.id} already processed`);\n    return { status: 'DUPLICATE_IGNORED' };\n  }\n  \n  return await executeBusinessLogic(event);\n}",
+    "language": "javascript",
+    "readTime": "2 MIN"
+  },
+  {
+    "id": "DIG-802",
+    "timestamp": "2026-08-25T14:30:00Z",
+    "category": "PERFORMANCE",
+    "tag": "DATABASE",
+    "title": "Zero-Allocation Cursor Pagination with Keyset Strategy",
+    "summary": "Avoid slow OFFSET queries in PostgreSQL by utilizing compound composite index seek conditions.",
+    "code": "-- Fast keyset pagination index seek\nSELECT id, created_at, title, payload_bytes\nFROM telemetry_logs\nWHERE (created_at, id) < ('2026-08-25T14:30:00Z', '01918a2f-e87a')\nORDER BY created_at DESC, id DESC\nLIMIT 25;",
+    "language": "sql",
+    "readTime": "3 MIN"
+  },
+  {
+    "id": "DIG-803",
+    "timestamp": "2026-08-24T09:00:00Z",
+    "category": "DEV_OPS",
+    "tag": "CONTAINERS",
+    "title": "Multi-Stage Distroless Docker Optimization",
+    "summary": "Reduce image footprint and CVE attack surface by 85% with Google Distroless runtime images.",
+    "code": "FROM node:22-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\nFROM gcr.io/distroless/nodejs22-debian12\nWORKDIR /app\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY . .\nEXPOSE 8080\nCMD [\"app.js\"]",
+    "language": "dockerfile",
+    "readTime": "2 MIN"
+  },
+  {
+    "id": "DIG-804",
+    "timestamp": "2026-08-23T16:45:00Z",
+    "category": "SECURITY",
+    "tag": "AUTH_SPEC",
+    "title": "Ed25519 Asymmetric JWT Token Verification",
+    "summary": "Upgrade from RSA-2048 to Edwards-curve Digital Signature (Ed25519) for faster cryptographic signature validation.",
+    "code": "import { importJWK, jwtVerify } from 'jose';\n\nconst publicKey = await importJWK({\n  kty: 'OKP',\n  crv: 'Ed25519',\n  x: '11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo'\n}, 'EdDSA');\n\nconst { payload } = await jwtVerify(tokenString, publicKey, {\n  issuer: 'urn:auth:pulse',\n  audience: 'urn:api:telemetry'\n});",
+    "language": "javascript",
+    "readTime": "3 MIN"
+  }
+]

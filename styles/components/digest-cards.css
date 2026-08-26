@@ -1,0 +1,128 @@
+/* ==========================================================================
+   DIGEST & TECH RADAR COMPONENT
+   ========================================================================== */
+
+.digest-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.digest-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-panel);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-panel);
+}
+
+.digest-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.digest-id-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--signal-cyan);
+  background: var(--signal-cyan-bg);
+  padding: 3px 6px;
+  border-radius: 3px;
+}
+
+.digest-title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.digest-summary {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.code-display-block {
+  background: var(--border-strong);
+  color: #F4F4F6;
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  position: relative;
+  overflow-x: auto;
+}
+
+.code-pre {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+  border-radius: 3px;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.code-copy-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Tech Radar Quadrants */
+.radar-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.radar-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-pad);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radar-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.radar-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.radar-badge.adopt {
+  background: var(--signal-green-bg);
+  color: var(--signal-green);
+}
+
+.radar-badge.trial {
+  background: var(--signal-yellow-bg);
+  color: var(--signal-yellow);
+}

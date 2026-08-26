@@ -1,0 +1,23 @@
+{
+  "name": "devpulse-instrument",
+  "version": "1.4.0",
+  "description": "Precision developer telemetry, utility workbench and automated data pipeline instrument.",
+  "main": "app.js",
+  "scripts": {
+    "start": "node scripts/run-local-sync.js",
+    "sync": "node services/pipelineEngine.js",
+    "validate": "node scripts/validate-pipeline.js",
+    "test": "node scripts/validate-pipeline.js"
+  },
+  "keywords": [
+    "developer-tools",
+    "telemetry",
+    "tech-radar",
+    "cron-sequencer",
+    "data-pipeline",
+    "instrument"
+  ],
+  "author": "DevPulse Team",
+  "license": "MIT",
+  "type": "module"
+}

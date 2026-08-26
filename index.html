@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEVPULSE // S-4 DEVELOPER TELEMETRY & WORKBENCH</title>
+  <meta name="description" content="Precision developer telemetry, utility workbench and automated data pipeline instrument.">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/industrial-theme.css">
+  <link rel="stylesheet" href="styles/components/workbench.css">
+  <link rel="stylesheet" href="styles/components/telemetry.css">
+  <link rel="stylesheet" href="styles/components/matrix-heatmap.css">
+  <link rel="stylesheet" href="styles/components/digest-cards.css">
+  <link rel="stylesheet" href="styles/components/guide-modal.css">
+</head>
+<body>
+
+  <!-- Master Instrument Chassis Container -->
+  <main class="instrument-container">
+    
+    <!-- Top Hardware Header Bar -->
+    <header class="chassis-header">
+      <div class="brand-badge-group">
+        <span class="led-status"></span>
+        <h1 class="chassis-title">
+          DEVPULSE
+          <span class="model-spec">// SYS-01 TELEMETRY INSTRUMENT</span>
+        </h1>
+      </div>
+
+      <div class="header-telemetry-meta">
+        <div class="meta-chip">
+          <span>PIPELINE:</span>
+          <span class="val-active" id="head-pipeline-status">SYS_OK</span>
+        </div>
+        <div class="meta-chip">
+          <span>STREAK:</span>
+          <span id="head-streak-val">42 DAYS</span>
+        </div>
+        <div class="meta-chip">
+          <span>LATENCY:</span>
+          <span class="val-active">24 MS</span>
+        </div>
+        <button class="hw-btn hw-btn-sm" id="btn-open-manual">[SYS MANUAL]</button>
+      </div>
+    </header>
+
+    <!-- Navigation Sequencer Pads -->
+    <nav class="nav-sequencer">
+      <div class="nav-pad active" data-target="panel-workbench">
+        <div class="pad-top-row">
+          <span class="pad-slot">PAD 01</span>
+          <span class="pad-indicator-dot cyan"></span>
+        </div>
+        <span class="pad-title">WORKBENCH</span>
+        <span class="pad-sub">JSON / REGEX / CRON</span>
+      </div>
+
+      <div class="nav-pad" data-target="panel-telemetry">
+        <div class="pad-top-row">
+          <span class="pad-slot">PAD 02</span>
+          <span class="pad-indicator-dot green"></span>
+        </div>
+        <span class="pad-title">TELEMETRY</span>
+        <span class="pad-sub">API PING & LATENCY</span>
+      </div>
+
+      <div class="nav-pad" data-target="panel-heatmap">
+        <div class="pad-top-row">
+          <span class="pad-slot">PAD 03</span>
+          <span class="pad-indicator-dot orange"></span>
+        </div>
+        <span class="pad-title">HEATMAP</span>
+        <span class="pad-sub">MATRIX CONTRIBUTION</span>
+      </div>
+
+      <div class="nav-pad" data-target="panel-digest">
+        <div class="pad-top-row">
+          <span class="pad-slot">PAD 04</span>
+          <span class="pad-indicator-dot yellow"></span>
+        </div>
+        <span class="pad-title">DIGEST</span>
+        <span class="pad-sub">ARCH & CODE PATTERNS</span>
+      </div>
+    </nav>
+
+    <!-- ================================================================
+         PANEL 1: WORKBENCH (JSON, REGEX, CRON, BASE64)
+         ================================================================ -->
+    <section class="view-panel active" id="panel-workbench">
+      <div class="hardware-box">
+        <div class="box-header-row">
+          <div class="box-title-group">
+            <h2 class="box-title">DEVELOPER UTILITY WORKBENCH</h2>
+            <span class="box-slot-tag">// P1_TOOLS</span>
+          </div>
+          <span class="micro-label">SELECT_SUBROUTINE</span>
+        </div>
+
+        <div class="workbench-layout">
+          <!-- Tool Sub-Pads -->
+          <div class="sub-pad-list">
+            <div class="sub-pad-item active" data-tool="json">
+              <span class="sub-pad-label">JSON TOOL</span>
+              <span class="sub-pad-code">[01]</span>
+            </div>
+            <div class="sub-pad-item" data-tool="regex">
+              <span class="sub-pad-label">REGEX TESTER</span>
+              <span class="sub-pad-code">[02]</span>
+            </div>
+            <div class="sub-pad-item" data-tool="cron">
+              <span class="sub-pad-label">CRON SEQUENCER</span>
+              <span class="sub-pad-code">[03]</span>
+            </div>
+            <div class="sub-pad-item" data-tool="base64">
+              <span class="sub-pad-label">BASE64 / HASH</span>
+              <span class="sub-pad-code">[04]</span>
+            </div>
+          </div>
+
+          <!-- Tool Editor Area -->
+          <div class="tool-content-area">
+            <!-- 1. JSON STAGE -->
+            <div class="tool-stage active" id="stage-json">
+              <div class="editor-grid-dual">
+                <div class="editor-pane">
+                  <div class="pane-header-row">
+                    <span class="micro-label">INPUT_BUFFER [RAW_JSON]</span>
+                    <button class="hw-btn hw-btn-sm" id="btn-clear-json">[CLR]</button>
+                  </div>
+                  <textarea class="hw-textarea" id="json-input" placeholder='{"service":"telemetry","status":"active","metrics":{"ping":18,"nodes":4}}'></textarea>
+                </div>
+
+                <div class="editor-pane">
+                  <div class="pane-header-row">
+                    <span class="micro-label">OUTPUT_BUFFER [FORMATTED]</span>
+                    <button class="hw-btn hw-btn-sm" id="btn-copy-json">[COPY]</button>
+                  </div>
+                  <textarea class="hw-textarea" id="json-output" readonly placeholder="// Formatted or minified output will appear here"></textarea>
+                </div>
+              </div>
+
+              <div class="editor-action-bar">
+                <button class="hw-btn hw-btn-primary" id="btn-format-json">[FORMAT JSON]</button>
+                <button class="hw-btn" id="btn-minify-json">[MINIFY JSON]</button>
+              </div>
+            </div>
+
+            <!-- 2. REGEX STAGE -->
+            <div class="tool-stage" id="stage-regex">
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 200px;">
+                  <span class="micro-label">EXPRESSION_PATTERN</span>
+                  <input type="text" class="hw-input" id="regex-pattern" style="width: 100%; margin-top: 4px;" value="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}">
+                </div>
+                <div style="width: 100px;">
+                  <span class="micro-label">FLAGS</span>
+                  <input type="text" class="hw-input" id="regex-flags" style="width: 100%; margin-top: 4px;" value="g">
+                </div>
+              </div>
+
+              <div>
+                <span class="micro-label">SAMPLE_TEXT_CORPUS</span>
+                <textarea class="hw-textarea" id="regex-test-text" style="height: 90px; margin-top: 4px;">System notifications routed to admin@devpulse.io and ops-team@cloud.internal for processing.</textarea>
+              </div>
+
+              <div>
+                <div class="pane-header-row" style="margin-bottom: 4px;">
+                  <span class="micro-label">MATCH_STREAM_PREVIEW</span>
+                  <span class="micro-label" id="regex-count-badge" style="color: var(--signal-cyan);">2 MATCH(ES)</span>
+                </div>
+                <div class="regex-match-view" id="regex-result-view"></div>
+              </div>
+            </div>
+
+            <!-- 3. CRON SEQUENCER STAGE -->
+            <div class="tool-stage" id="stage-cron">
+              <div class="cron-sequencer-box">
+                <span class="micro-label">CRON_EXPRESSION_GENERATOR</span>
+                <div class="cron-display-card">
+                  <span id="cron-expression-display">15 2,10,18 * * *</span>
+                  <button class="hw-btn hw-btn-sm" id="btn-copy-cron" style="background: rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.2); color: #fff;">[COPY CRON]</button>
+                </div>
+                <p class="cron-explain-text" id="cron-explain-output">Runs 3 times daily at 02:15, 10:15, and 18:15 UTC.</p>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
+                <div>
+                  <span class="micro-label">MINUTE</span>
+                  <select class="hw-input" id="cron-min" style="width: 100%; margin-top: 4px;">
+                    <option value="15">Minute 15 (:15)</option>
+                    <option value="0">Minute 0 (:00)</option>
+                    <option value="30">Minute 30 (:30)</option>
+                    <option value="*/15">Every 15 mins (*/15)</option>
+                    <option value="*">Every minute (*)</option>
+                  </select>
+                </div>
+                <div>
+                  <span class="micro-label">HOUR</span>
+                  <select class="hw-input" id="cron-hour" style="width: 100%; margin-top: 4px;">
+                    <option value="2,10,18">3x Daily (02, 10, 18)</option>
+                    <option value="0">Midnight (00:00)</option>
+                    <option value="8,20">2x Daily (08, 20)</option>
+                    <option value="*/6">Every 6 hrs (*/6)</option>
+                    <option value="*">Every hour (*)</option>
+                  </select>
+                </div>
+                <div>
+                  <span class="micro-label">DAY_OF_WEEK</span>
+                  <select class="hw-input" id="cron-dow" style="width: 100%; margin-top: 4px;">
+                    <option value="*">Every day (*)</option>
+                    <option value="1-5">Mon to Fri (1-5)</option>
+                    <option value="0,6">Weekends only (0,6)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. BASE64 STAGE -->
+            <div class="tool-stage" id="stage-base64">
+              <div class="editor-grid-dual">
+                <div class="editor-pane">
+                  <span class="micro-label">TEXT_INPUT_BUFFER</span>
+                  <textarea class="hw-textarea" id="b64-input" placeholder="Enter plain text or Base64 string..."></textarea>
+                </div>
+                <div class="editor-pane">
+                  <div class="pane-header-row">
+                    <span class="micro-label">CONVERTED_RESULT</span>
+                    <button class="hw-btn hw-btn-sm" id="btn-b64-copy">[COPY]</button>
+                  </div>
+                  <textarea class="hw-textarea" id="b64-output" readonly placeholder="// Converted output will appear here"></textarea>
+                </div>
+              </div>
+              <div class="editor-action-bar">
+                <button class="hw-btn hw-btn-primary" id="btn-b64-encode">[ENCODE BASE64]</button>
+                <button class="hw-btn" id="btn-b64-decode">[DECODE BASE64]</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PANEL 2: TELEMETRY (CLOUD API STATUS & LIVE PING)
+         ================================================================ -->
+    <section class="view-panel" id="panel-telemetry">
+      <div class="hardware-box">
+        <div class="box-header-row">
+          <div class="box-title-group">
+            <h2 class="box-title">EDGE TELEMETRY & API LATENCY METERS</h2>
+            <span class="box-slot-tag">// P2_PROBE</span>
+          </div>
+          <button class="hw-btn hw-btn-accent" id="btn-run-ping-test">[RUN PING TEST]</button>
+        </div>
+
+        <div class="telemetry-grid" id="telemetry-cards-container">
+          <!-- Populated dynamically by TelemetryComponent.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PANEL 3: HEATMAP (DOT-MATRIX GITHUB CONTRIBUTION & STREAK)
+         ================================================================ -->
+    <section class="view-panel" id="panel-heatmap">
+      <div class="hardware-box">
+        <div class="box-header-row">
+          <div class="box-title-group">
+            <h2 class="box-title">DOT-MATRIX CONTRIBUTION ANALYZER</h2>
+            <span class="box-slot-tag">// P3_MATRIX</span>
+          </div>
+          <div class="user-query-group">
+            <input type="text" class="hw-input" id="github-user-input" placeholder="GITHUB_HANDLE..." value="active_developer">
+            <button class="hw-btn hw-btn-sm" id="btn-fetch-gh-user">[ANALYZE]</button>
+          </div>
+        </div>
+
+        <!-- Metric strip -->
+        <div class="heatmap-stats-strip">
+          <div class="stat-cell">
+            <span class="micro-label">ANNUAL_COMMITS</span>
+            <span class="stat-cell-num" id="stat-total-commits">1,048</span>
+          </div>
+          <div class="stat-cell">
+            <span class="micro-label">CURRENT_STREAK</span>
+            <span class="stat-cell-num" id="stat-current-streak">42 DAYS</span>
+          </div>
+          <div class="stat-cell">
+            <span class="micro-label">LONGEST_STREAK</span>
+            <span class="stat-cell-num" id="stat-max-streak">94 DAYS</span>
+          </div>
+          <div class="stat-cell">
+            <span class="micro-label">DAILY_AVERAGE</span>
+            <span class="stat-cell-num" id="stat-avg-daily">2.9 / DAY</span>
+          </div>
+        </div>
+
+        <!-- Dot Matrix Canvas -->
+        <div class="matrix-scroll-wrapper">
+          <div class="matrix-grid-days" id="matrix-grid-container">
+            <!-- 52 weeks x 7 days dots rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Legend scale -->
+        <div class="matrix-legend-row">
+          <span>LESS</span>
+          <div class="legend-scale">
+            <div class="matrix-dot lvl-0"></div>
+            <div class="matrix-dot lvl-1"></div>
+            <div class="matrix-dot lvl-2"></div>
+            <div class="matrix-dot lvl-3"></div>
+            <div class="matrix-dot lvl-4"></div>
+          </div>
+          <span>MORE</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================
+         PANEL 4: DIGEST (TECHNICAL PATTERNS & CODE CARDS)
+         ================================================================ -->
+    <section class="view-panel" id="panel-digest">
+      <div class="hardware-box">
+        <div class="box-header-row">
+          <div class="box-title-group">
+            <h2 class="box-title">TECHNICAL DIGEST & ARCHITECTURE PATTERNS</h2>
+            <span class="box-slot-tag">// P4_FEED</span>
+          </div>
+          <span class="micro-label">SYNCHRONIZED_FEED</span>
+        </div>
+
+        <div class="digest-feed" id="digest-feed-container">
+          <!-- Populated dynamically by DigestComponent.js -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Hardware Footer Bar -->
+    <footer class="chassis-footer">
+      <div class="footer-left">
+        <span>RUNTIME: NODE_V22</span>
+        <span>STATUS: SYS_OPERATIONAL</span>
+        <span>LOCATION: LOCAL_SYS</span>
+      </div>
+      <div>
+        <button class="footer-btn-manual" id="btn-trigger-cycle">[TRIGGER LOCAL CYCLE]</button>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- ================================================================
+       GUIDE & REPOSITORY SETUP MANUAL DIALOG MODAL
+       ================================================================ -->
+  <div class="modal-backdrop" id="guide-modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header-row">
+        <h3 class="modal-title">DEVPULSE // GITHUB ACTIONS SETUP MANUAL</h3>
+        <button class="hw-btn hw-btn-sm" id="btn-close-manual">[CLOSE]</button>
+      </div>
+
+      <div class="modal-body">
+        <p>Follow these 3 simple steps to connect this project with GitHub Actions to enable automated telemetry synchronization and data pipeline workflows:</p>
+
+        <div class="manual-step-box">
+          <div class="manual-step-title">
+            <span class="manual-step-badge">STEP 01</span>
+            Initialize & Push to GitHub
+          </div>
+          <p>Create a new repository on GitHub and push this project:</p>
+          <pre class="code-snippet-mini"><code>git init
+git add .
+git commit -m "Initial commit: DevPulse telemetry and utility instrument"
+git branch -M main
+git remote add origin https://github.com/radityaarinanta/-bootstrap-devpulse.git
+git push -u origin main</code></pre>
+        </div>
+
+        <div class="manual-step-box">
+          <div class="manual-step-title">
+            <span class="manual-step-badge">STEP 02</span>
+            Enable Workflow Read & Write Permissions
+          </div>
+          <p>This allows GitHub Actions to automatically update telemetry records and digest data feeds:</p>
+          <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 4px;">
+            <li>Go to your GitHub Repository -> <strong>Settings</strong></li>
+            <li>Click <strong>Actions</strong> -> <strong>General</strong></li>
+            <li>Scroll down to <strong>Workflow permissions</strong></li>
+            <li>Select <strong>"Read and write permissions"</strong> and click <strong>Save</strong></li>
+          </ol>
+        </div>
+
+        <div class="manual-step-box">
+          <div class="manual-step-title">
+            <span class="manual-step-badge">STEP 03</span>
+            Automated Execution & Manual Trigger
+          </div>
+          <p>The workflow in <code>.github/workflows/data-pipeline.yml</code> will automatically synchronize data feeds periodically (or you can trigger it manually anytime under the <strong>Actions</strong> tab on GitHub).</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript App Entry Point -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>

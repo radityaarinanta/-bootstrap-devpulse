@@ -1,0 +1,179 @@
+/* ==========================================================================
+   WORKBENCH COMPONENT (JSON, REGEX, CRON, BASE64 / HASH)
+   ========================================================================== */
+
+.workbench-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 860px) {
+  .workbench-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sub-pad-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sub-pad-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-pad);
+  padding: 10px 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: all 0.12s ease;
+}
+
+.sub-pad-item:hover {
+  background: var(--bg-pad-hover);
+  border-color: var(--border-strong);
+}
+
+.sub-pad-item.active {
+  background: var(--bg-inset);
+  border-color: var(--border-strong);
+  font-weight: 700;
+}
+
+.sub-pad-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.sub-pad-code {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Tool Panel Editor Workspace */
+.tool-stage {
+  display: none;
+}
+
+.tool-stage.active {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.editor-grid-dual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+@media (max-width: 768px) {
+  .editor-grid-dual {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pane-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.hw-textarea {
+  width: 100%;
+  height: 220px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--text-primary);
+  resize: vertical;
+  outline: none;
+  box-shadow: var(--shadow-inset);
+  white-space: pre;
+}
+
+.hw-textarea:focus {
+  border-color: var(--border-strong);
+}
+
+.hw-textarea[readonly] {
+  background: var(--bg-inset);
+  cursor: text;
+}
+
+.editor-action-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Regex Match Viewer Box */
+.regex-match-view {
+  min-height: 100px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-all;
+  box-shadow: var(--shadow-inset);
+}
+
+.regex-highlight {
+  background: rgba(0, 136, 204, 0.25);
+  border-bottom: 2px solid var(--signal-cyan);
+  color: var(--text-primary);
+  font-weight: 700;
+  border-radius: 2px;
+  padding: 1px 2px;
+}
+
+/* Cron Visual Sequencer */
+.cron-sequencer-box {
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cron-display-card {
+  background: var(--text-primary);
+  color: #00FF88;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cron-explain-text {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}

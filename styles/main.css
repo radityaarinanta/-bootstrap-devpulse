@@ -1,0 +1,331 @@
+/* ==========================================================================
+   DEVPULSE / SYS-PULSE 01 - INDUSTRIAL HARDWARE UI DESIGN SYSTEM
+   Zero-Emoji | Precision Monospace | Tactile Instruments | Dot-Matrix
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Industrial Neutral Palette */
+  --bg-chassis: #EBEBED;
+  --bg-panel: #F4F4F6;
+  --bg-surface: #FFFFFF;
+  --bg-inset: #E5E5EA;
+  --bg-pad-hover: #ECECEF;
+  --bg-pad-active: #E0E0E6;
+
+  /* Precision Borders */
+  --border-strong: #18181B;
+  --border-medium: #D1D1D6;
+  --border-subtle: #E2E2E7;
+  --border-inset: #C7C7CC;
+
+  /* Typography Colors */
+  --text-primary: #111113;
+  --text-secondary: #52525B;
+  --text-muted: #8E8E93;
+  --text-inverse: #FFFFFF;
+
+  /* Precision Signal Accents (Industrial LED / Hardware Colors) */
+  --signal-cyan: #0088CC;
+  --signal-cyan-bg: rgba(0, 136, 204, 0.12);
+  --signal-orange: #FF5500;
+  --signal-orange-bg: rgba(255, 85, 0, 0.12);
+  --signal-green: #0E9F6E;
+  --signal-green-bg: rgba(14, 159, 110, 0.14);
+  --signal-yellow: #D97706;
+  --signal-yellow-bg: rgba(217, 119, 6, 0.12);
+  --signal-magenta: #C026D3;
+  --signal-magenta-bg: rgba(192, 38, 211, 0.12);
+
+  /* Fonts */
+  --font-mono: 'JetBrains Mono', 'SF Mono', Consolas, Menlo, monospace;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Dimensions & Radii */
+  --radius-chassis: 16px;
+  --radius-panel: 12px;
+  --radius-pad: 8px;
+  --radius-sm: 5px;
+  --radius-full: 9999px;
+
+  /* Tactile Shadows */
+  --shadow-chassis: 0 20px 40px -15px rgba(0, 0, 0, 0.12), 0 0 0 1px var(--border-medium);
+  --shadow-panel: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.06), inset 0 0 0 1px var(--border-inset);
+  --shadow-pad: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px var(--border-medium);
+  --shadow-pad-active: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 0 1px var(--border-strong);
+}
+
+/* Base Reset & Setup */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--bg-chassis);
+  color: var(--text-primary);
+  min-height: 100vh;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Precision Hardware Dot-Matrix Pattern Background */
+  background-image: radial-gradient(var(--border-medium) 1.2px, transparent 1.2px);
+  background-size: 18px 18px;
+}
+
+/* Master Instrument Chassis Container */
+.instrument-container {
+  width: 100%;
+  max-width: 1360px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-chassis);
+  box-shadow: var(--shadow-chassis);
+  padding: 20px 24px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+}
+
+/* Top Hardware Header Bar */
+.chassis-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-medium);
+  padding-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.brand-badge-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.led-status {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--signal-green);
+  box-shadow: 0 0 8px var(--signal-green);
+  display: inline-block;
+  animation: pulse-led 2s infinite ease-in-out;
+}
+
+@keyframes pulse-led {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.9); }
+}
+
+.chassis-title {
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 1.15rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chassis-title .model-spec {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.08em;
+}
+
+.header-telemetry-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.meta-chip {
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 4px 8px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.meta-chip .val-active {
+  color: var(--signal-cyan);
+}
+
+/* Micro-labels standard */
+.micro-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* Primary Instrument Nav Pads */
+.nav-sequencer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.nav-pad {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-pad);
+  padding: 12px 14px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+  box-shadow: var(--shadow-pad);
+}
+
+.nav-pad:hover {
+  background: var(--bg-pad-hover);
+  border-color: var(--border-strong);
+}
+
+.nav-pad.active {
+  background: var(--text-primary);
+  border-color: var(--text-primary);
+  box-shadow: var(--shadow-pad-active);
+}
+
+.nav-pad.active .pad-slot,
+.nav-pad.active .pad-title,
+.nav-pad.active .pad-sub {
+  color: var(--text-inverse);
+}
+
+.pad-top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pad-slot {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+}
+
+.pad-indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.pad-indicator-dot.cyan { background: var(--signal-cyan); }
+.pad-indicator-dot.orange { background: var(--signal-orange); }
+.pad-indicator-dot.green { background: var(--signal-green); }
+.pad-indicator-dot.yellow { background: var(--signal-yellow); }
+.pad-indicator-dot.magenta { background: var(--signal-magenta); }
+
+.pad-title {
+  font-weight: 700;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pad-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Master View Panels */
+.view-panel {
+  display: none;
+  animation: fadeInPanel 0.2s ease-in-out forwards;
+}
+
+.view-panel.active {
+  display: block;
+}
+
+@keyframes fadeInPanel {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Footer Telemetry Status Bar */
+.chassis-footer {
+  border-top: 1px solid var(--border-medium);
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 0.76rem;
+  color: var(--text-secondary);
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer-btn-manual {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.footer-btn-manual:hover {
+  background: var(--border-strong);
+  color: var(--text-inverse);
+}
+
+/* Utility classes */
+.hidden { display: none !important; }
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  body { padding: 12px; }
+  .instrument-container { padding: 16px; }
+  .nav-sequencer { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .nav-sequencer { grid-template-columns: 1fr; }
+  .header-telemetry-meta { flex-direction: column; align-items: flex-start; gap: 8px; }
+}

@@ -1,0 +1,195 @@
+/* ==========================================================================
+   INDUSTRIAL THEME COMPONENTS & HARDWARE ACCENTS
+   ========================================================================== */
+
+/* Hardware Panel Container */
+.hardware-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-panel);
+  box-shadow: var(--shadow-panel);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.box-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 10px;
+}
+
+.box-title-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.box-title {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.box-slot-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+/* Industrial Action Buttons */
+.hw-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+
+.hw-btn:hover {
+  background: var(--bg-surface);
+  border-color: var(--border-strong);
+}
+
+.hw-btn:active {
+  background: var(--bg-inset);
+  transform: translateY(1px);
+}
+
+.hw-btn-primary {
+  background: var(--text-primary);
+  color: var(--text-inverse);
+  border-color: var(--border-strong);
+}
+
+.hw-btn-primary:hover {
+  background: #27272A;
+  color: var(--text-inverse);
+}
+
+.hw-btn-accent {
+  background: var(--signal-cyan);
+  color: #FFFFFF;
+  border-color: var(--signal-cyan);
+}
+
+.hw-btn-accent:hover {
+  background: #0077B3;
+}
+
+.hw-btn-sm {
+  padding: 4px 8px;
+  font-size: 0.72rem;
+}
+
+/* Tactile Toggle & Step Buttons */
+.step-selector {
+  display: inline-flex;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  gap: 2px;
+}
+
+.step-btn {
+  background: transparent;
+  border: none;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.step-btn:hover {
+  color: var(--text-primary);
+}
+
+.step-btn.active {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+
+/* Hardware Sliders & Rails */
+.hw-slider-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.hw-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--bg-inset);
+  border: 1px solid var(--border-subtle);
+  border-radius: 3px;
+  outline: none;
+}
+
+.hw-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--text-primary);
+  border: 1px solid var(--border-strong);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+/* Toast notification indicator */
+.hw-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--border-strong);
+  color: var(--text-inverse);
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hw-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

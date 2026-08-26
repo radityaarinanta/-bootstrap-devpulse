@@ -1,0 +1,61 @@
+name: Data Pipeline & Content Sync
+
+on:
+  schedule:
+    # Runs at natural varied intervals across the day (02:15, 10:45, 18:20 UTC)
+    - cron: '15 2,10,18 * * *'
+  workflow_dispatch:
+    inputs:
+      commit_target:
+        description: 'Manual commit count override (1-4)'
+        required: false
+        default: 'auto'
+      author_email:
+        description: 'Custom Git author email (leave blank to use GitHub account)'
+        required: false
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  telemetry-sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js Environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Configure Git Identity
+        run: |
+          if [ -n "${{ inputs.author_email }}" ]; then
+            git config --global user.email "${{ inputs.author_email }}"
+            git config --global user.name "${{ github.actor }}"
+          elif [ -n "${{ secrets.GIT_AUTHOR_EMAIL }}" ]; then
+            git config --global user.email "${{ secrets.GIT_AUTHOR_EMAIL }}"
+            git config --global user.name "${{ secrets.GIT_AUTHOR_NAME || github.actor }}"
+          else
+            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+            git config --global user.name "${{ github.actor }}"
+          fi
+
+      - name: Run Telemetry Pipeline Engine
+        run: |
+          if [ "${{ inputs.commit_target }}" != "auto" ] && [ -n "${{ inputs.commit_target }}" ]; then
+            node services/pipelineEngine.js --commits=${{ inputs.commit_target }}
+          else
+            node services/pipelineEngine.js
+          fi
+
+      - name: Push Data Synchronizations
+        run: |
+          git pull --rebase origin main || true
+          git push origin main
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
