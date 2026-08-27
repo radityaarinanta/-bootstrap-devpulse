@@ -3,54 +3,54 @@
     "service": "GITHUB_API_REST",
     "endpoint": "https://api.github.com/zen",
     "status": "OPERATIONAL",
-    "latencyMs": 28,
+    "latencyMs": 27,
     "uptimePercent": 99.98,
     "region": "GLOBAL_EDGE",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   },
   {
     "service": "CLOUDFLARE_EDGE_DNS",
     "endpoint": "https://1.1.1.1/dns-query",
     "status": "OPERATIONAL",
-    "latencyMs": 10,
+    "latencyMs": 12,
     "uptimePercent": 99.99,
     "region": "ANYCAST",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   },
   {
     "service": "NPM_REGISTRY",
     "endpoint": "https://registry.npmjs.org/-/ping",
     "status": "OPERATIONAL",
-    "latencyMs": 36,
+    "latencyMs": 35,
     "uptimePercent": 99.95,
     "region": "US_EAST",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   },
   {
     "service": "SUPABASE_EDGE",
     "endpoint": "https://api.supabase.com/v1/health",
     "status": "OPERATIONAL",
-    "latencyMs": 44,
+    "latencyMs": 47,
     "uptimePercent": 99.92,
     "region": "EU_CENTRAL",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   },
   {
     "service": "OPENAI_GATEWAY",
     "endpoint": "https://status.openai.com/api/v2/status.json",
     "status": "OPERATIONAL",
-    "latencyMs": 85,
+    "latencyMs": 82,
     "uptimePercent": 99.89,
     "region": "US_WEST",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   },
   {
     "service": "GOOGLE_DNS_HTTPS",
     "endpoint": "https://dns.google/resolve",
     "status": "OPERATIONAL",
-    "latencyMs": 22,
+    "latencyMs": 19,
     "uptimePercent": 99.99,
     "region": "GLOBAL_ANYCAST",
-    "lastChecked": "2026-08-26T05:40:39.664Z"
+    "lastChecked": "2026-08-27T12:49:14.641Z"
   }
 ]
