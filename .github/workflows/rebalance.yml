@@ -1,0 +1,37 @@
+name: Telemetry Dataset Optimization & Activity Rebalance
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'scripts/rebalance-activity.js'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  rebalance:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Configure Git Identity
+        run: |
+          git config --global user.email "radittantra36@gmail.com"
+          git config --global user.name "radityaarinanta"
+
+      - name: Execute Rebalance Pipeline
+        run: node scripts/rebalance-activity.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

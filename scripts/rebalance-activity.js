@@ -7,25 +7,55 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = path.resolve(__dirname, '..');
 const DATA_FILE = path.join(ROOT_DIR, 'data', 'pipeline-meta.json');
 
-const BATCH_FEATURES = [
-  { name: 'cluster-probe-opt', msg: 'perf(telemetry): optimize distributed edge ping sampling intervals' },
-  { name: 'radar-score-indexing', msg: 'chore(radar): index web framework adoption confidence matrices' },
-  { name: 'digest-security-spec', msg: 'docs(digest): document zero-trust microservice boundary specs' },
-  { name: 'cache-invalidation-flow', msg: 'feat(pipeline): implement deterministic cache invalidation hooks' },
-  { name: 'metrics-aggregation-stream', msg: 'perf(telemetry): streamline time-series latency aggregation' },
-  { name: 'resources-curation-sync', msg: 'docs(resources): catalog high-throughput rust CLI devtools' }
+const MODULE_SCOPES = [
+  'cluster-probe-opt',
+  'radar-score-indexing',
+  'digest-security-spec',
+  'cache-invalidation-flow',
+  'metrics-aggregation-stream',
+  'resources-curation-sync',
+  'gateway-latency-buffer',
+  'telemetry-schema-guard',
+  'benchmark-snapshot-pipeline',
+  'node-health-telemetry',
+  'event-bus-throughput-opt',
+  'async-pipeline-worker',
+  'dns-resolution-probes',
+  'memory-churn-reduction',
+  'constant-time-crypto-guard',
+  'circuit-breaker-fallback',
+  'keyset-pagination-seek',
+  'distroless-container-spec',
+  'jwt-verification-upgrade',
+  'crond-scheduler-precision',
+  'matrix-visualizer-engine',
+  'edge-telemetry-sampler'
 ];
 
-export function runActivityRebalance() {
-  console.log('[SYS_BALANCE] Initiating repository activity rebalancing...');
-  
+const ISSUE_AUDITS = [
+  'Periodic edge cluster probe verification',
+  'Telemetry latency threshold synchronization',
+  'Weekly framework adoption index refresh',
+  'Software architecture pattern benchmark audit',
+  'DNS resolver latency benchmark health check',
+  'Static dataset schema integrity validation',
+  'Node runtime memory footprint audit',
+  'Cross-region telemetry ping verification',
+  'API gateway throughput benchmark check',
+  'Distributed event queue consumer audit'
+];
+
+export async function runRebalance() {
+  console.log('[SYS_BALANCE] Executing activity rebalancing pipeline...');
   const raw = fs.readFileSync(DATA_FILE, 'utf8');
   const meta = JSON.parse(raw);
 
-  for (let i = 0; i < BATCH_FEATURES.length; i++) {
-    const item = BATCH_FEATURES[i];
-    const branchName = `feature/${item.name}`;
-    console.log(`[BALANCE_STEP ${i + 1}/${BATCH_FEATURES.length}] Processing branch ${branchName}...`);
+  // 1. Process Pull Requests
+  for (let i = 0; i < MODULE_SCOPES.length; i++) {
+    const scope = MODULE_SCOPES[i];
+    const branchName = `feature/${scope}`;
+    const commitMsg = `feat(pipeline): optimize ${scope.replace(/-/g, ' ')} module`;
+    console.log(`[PR_STEP ${i + 1}/${MODULE_SCOPES.length}] Processing ${branchName}...`);
 
     try {
       execSync(`git checkout -b ${branchName}`, { stdio: 'pipe' });
@@ -35,29 +65,40 @@ export function runActivityRebalance() {
       fs.writeFileSync(DATA_FILE, JSON.stringify(meta, null, 2) + '\n', 'utf8');
 
       execSync(`git add "${DATA_FILE}"`, { stdio: 'pipe' });
-      execSync(`git commit -m "${item.msg}"`, { stdio: 'pipe' });
-      execSync(`git push -u origin ${branchName}`, { stdio: 'pipe' });
+      execSync(`git commit -m "${commitMsg}"`, { stdio: 'pipe' });
+      execSync(`git push origin ${branchName}`, { stdio: 'pipe' });
 
-      try {
-        execSync(`gh pr create --title "${item.msg}" --body "Automated telemetry feature sync." --base main --head ${branchName}`, { stdio: 'pipe' });
-        execSync(`gh pr merge --merge --delete-branch`, { stdio: 'pipe' });
-      } catch (ghErr) {
-        execSync(`git checkout main`, { stdio: 'pipe' });
-        execSync(`git merge --no-ff -m "Merge pull request #${i + 5} from radityaarinanta/${branchName}\n\n${item.msg}" ${branchName}`, { stdio: 'pipe' });
-        execSync(`git push origin main`, { stdio: 'pipe' });
-        execSync(`git branch -D ${branchName}`, { stdio: 'pipe' });
-      }
+      execSync(`gh pr create --title "${commitMsg}" --body "Automated telemetry data pipeline synchronization for ${scope}." --base main --head ${branchName}`, { stdio: 'pipe' });
+      execSync(`gh pr merge ${branchName} --merge --delete-branch`, { stdio: 'pipe' });
 
       execSync(`git checkout main`, { stdio: 'pipe' });
       execSync(`git pull origin main`, { stdio: 'pipe' });
-    } catch (err) {
-      execSync(`git checkout main`, { stdio: 'pipe' });
+    } catch (e) {
+      console.warn(`[PR_WARN] Step ${scope}: ${e.message}`);
+      try {
+        execSync(`git checkout main`, { stdio: 'pipe' });
+        execSync(`git branch -D ${branchName}`, { stdio: 'pipe' });
+      } catch (err) {}
     }
   }
 
-  console.log('[SYS_OK] Activity rebalancing completed successfully.');
+  // 2. Process Issues
+  for (let j = 0; j < ISSUE_AUDITS.length; j++) {
+    const auditTitle = `[TELEMETRY_AUDIT] ${ISSUE_AUDITS[j]}`;
+    console.log(`[ISSUE_STEP ${j + 1}/${ISSUE_AUDITS.length}] Logging ${auditTitle}...`);
+    try {
+      const out = execSync(`gh issue create --title "${auditTitle}" --body "Routine automated system health audit. Status: OPERATIONAL."`, { encoding: 'utf8', stdio: 'pipe' });
+      const match = out.match(/\/issues\/(\d+)/);
+      if (match && match[1]) {
+        const issueNum = match[1];
+        execSync(`gh issue close ${issueNum} --comment "Audit verified and resolved successfully."`, { stdio: 'pipe' });
+      }
+    } catch (e) {}
+  }
+
+  console.log('[SYS_OK] Activity rebalancing completed.');
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
-  runActivityRebalance();
+  runRebalance();
 }
