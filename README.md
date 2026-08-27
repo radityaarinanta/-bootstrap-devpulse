@@ -95,43 +95,18 @@ Web actions/
 
 ---
 
-## Deployment & CI/CD Pipeline Setup
+## Getting Started
 
-To set up the automated data synchronization pipeline on GitHub:
-
-### Step 1: Initialize Repository & Push
+### Clone & Run Locally
 ```bash
-git init
-git add .
-git commit -m "Initial commit: DevPulse telemetry and utility instrument"
-git branch -M main
-git remote add origin https://github.com/radityaarinanta/-bootstrap-devpulse.git
-git push -u origin main
-```
+git clone https://github.com/radityaarinanta/-bootstrap-devpulse.git
+cd -bootstrap-devpulse
 
-### Step 2: Configure Workflow Permissions
-1. Open your repository on GitHub.
-2. Go to **Settings** > **Actions** > **General**.
-3. Under **Workflow permissions**, select **"Read and write permissions"**.
-4. Click **Save**.
-
-### Step 3: Automated Pipeline Execution
-- The CI/CD workflow defined in `.github/workflows/data-pipeline.yml` runs periodically on schedule to refresh telemetry metrics and data feeds.
-- You can trigger manual pipeline sync runs anytime under the **Actions** tab on GitHub by clicking **Run workflow**.
-
----
-
-## Local Development
-
-### Start Local Web Server
-```bash
 # Start local static server
 python -m http.server 3000
-# or
-npx serve .
 ```
 
-### Run Local Data Synchronization
+### Run Telemetry Synchronization
 ```bash
 npm run sync
 ```
@@ -143,4 +118,6 @@ npm test
 
 ---
 
+## Automated CI/CD Data Pipeline
 
+The automated data pipeline runs periodically via GitHub Actions (`.github/workflows/data-pipeline.yml`) to collect and refresh telemetry metrics, architecture insights, and framework benchmarks. Manual sync triggers can also be initiated under the **Actions** tab on GitHub.
