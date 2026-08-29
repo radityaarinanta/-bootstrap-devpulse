@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-985",
+    "timestamp": "2026-08-29T01:45:45.573Z",
+    "category": "SECURITY",
+    "tag": "CRYPTOGRAPHY",
+    "title": "Constant-Time String Comparison for HMAC Verification",
+    "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
+    "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
+    "language": "javascript",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-933",
     "timestamp": "2026-08-26T05:40:39.683Z",
     "category": "PERFORMANCE",
