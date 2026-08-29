@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-913",
+    "timestamp": "2026-08-29T09:05:14.550Z",
+    "category": "DATABASE",
+    "tag": "POSTGRES_SQL",
+    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
+    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
+    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
+    "language": "sql",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-985",
     "timestamp": "2026-08-29T01:45:45.573Z",
     "category": "SECURITY",
