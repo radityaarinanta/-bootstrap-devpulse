@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-959",
+    "timestamp": "2026-08-29T15:05:42.013Z",
+    "category": "DEVOPS",
+    "tag": "KUBERNETES",
+    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
+    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
+    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
+    "language": "yaml",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-913",
     "timestamp": "2026-08-29T09:05:14.550Z",
     "category": "DATABASE",
@@ -75,16 +86,5 @@
     "code": "FROM node:22-alpine AS builder\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci --only=production\n\nFROM gcr.io/distroless/nodejs22-debian12\nWORKDIR /app\nCOPY --from=builder /app/node_modules ./node_modules\nCOPY . .\nEXPOSE 8080\nCMD [\"app.js\"]",
     "language": "dockerfile",
     "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-804",
-    "timestamp": "2026-08-23T16:45:00Z",
-    "category": "SECURITY",
-    "tag": "AUTH_SPEC",
-    "title": "Ed25519 Asymmetric JWT Token Verification",
-    "summary": "Upgrade from RSA-2048 to Edwards-curve Digital Signature (Ed25519) for faster cryptographic signature validation.",
-    "code": "import { importJWK, jwtVerify } from 'jose';\n\nconst publicKey = await importJWK({\n  kty: 'OKP',\n  crv: 'Ed25519',\n  x: '11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo'\n}, 'EdDSA');\n\nconst { payload } = await jwtVerify(tokenString, publicKey, {\n  issuer: 'urn:auth:pulse',\n  audience: 'urn:api:telemetry'\n});",
-    "language": "javascript",
-    "readTime": "3 MIN"
   }
 ]
