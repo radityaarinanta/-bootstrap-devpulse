@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-862",
+    "timestamp": "2026-08-29T20:56:27.312Z",
+    "category": "SECURITY",
+    "tag": "CRYPTOGRAPHY",
+    "title": "Constant-Time String Comparison for HMAC Verification",
+    "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
+    "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
+    "language": "javascript",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-959",
     "timestamp": "2026-08-29T15:05:42.013Z",
     "category": "DEVOPS",
@@ -20,17 +31,6 @@
     "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
     "language": "sql",
     "readTime": "3 MIN"
-  },
-  {
-    "id": "DIG-985",
-    "timestamp": "2026-08-29T01:45:45.573Z",
-    "category": "SECURITY",
-    "tag": "CRYPTOGRAPHY",
-    "title": "Constant-Time String Comparison for HMAC Verification",
-    "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
-    "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
-    "language": "javascript",
-    "readTime": "2 MIN"
   },
   {
     "id": "DIG-933",
