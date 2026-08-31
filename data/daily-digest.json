@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-886",
+    "timestamp": "2026-08-31T22:52:22.098Z",
+    "category": "PERFORMANCE",
+    "tag": "MEMORY_OPT",
+    "title": "Zero-Copy Buffer Slicing in High-Throughput Streams",
+    "summary": "Avoid memory churn and garbage collection spikes by utilizing ArrayBuffer views over deep payload clones.",
+    "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
+    "language": "javascript",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-837",
     "timestamp": "2026-08-30T21:08:40.985Z",
     "category": "SECURITY",
@@ -30,17 +41,6 @@
     "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
     "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
     "language": "yaml",
-    "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-933",
-    "timestamp": "2026-08-26T05:40:39.683Z",
-    "category": "PERFORMANCE",
-    "tag": "MEMORY_OPT",
-    "title": "Zero-Copy Buffer Slicing in High-Throughput Streams",
-    "summary": "Avoid memory churn and garbage collection spikes by utilizing ArrayBuffer views over deep payload clones.",
-    "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
-    "language": "javascript",
     "readTime": "2 MIN"
   },
   {
