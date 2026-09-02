@@ -1,7 +1,7 @@
 [
   {
-    "id": "DIG-967",
-    "timestamp": "2026-09-01T07:50:20.911Z",
+    "id": "DIG-961",
+    "timestamp": "2026-09-02T21:05:15.421Z",
     "category": "DATABASE",
     "tag": "POSTGRES_SQL",
     "title": "Concurrent Materialized View Refresh with Zero Table Locks",
