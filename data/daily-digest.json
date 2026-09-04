@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-901",
+    "timestamp": "2026-09-04T14:23:22.626Z",
+    "category": "ARCH_PATTERN",
+    "tag": "SYSTEM_DESIGN",
+    "title": "Circuit Breaker State Machine with Exponential Fallback",
+    "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
+    "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
+    "language": "javascript",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-849",
     "timestamp": "2026-09-03T07:12:07.340Z",
     "category": "PERFORMANCE",
@@ -42,17 +53,6 @@
     "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
     "language": "yaml",
     "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-976",
-    "timestamp": "2026-08-26T05:21:07.654Z",
-    "category": "ARCH_PATTERN",
-    "tag": "SYSTEM_DESIGN",
-    "title": "Circuit Breaker State Machine with Exponential Fallback",
-    "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
-    "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
-    "language": "javascript",
-    "readTime": "3 MIN"
   },
   {
     "id": "DIG-801",
