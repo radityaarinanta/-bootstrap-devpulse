@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-946",
+    "timestamp": "2026-09-06T07:08:52.999Z",
+    "category": "SECURITY",
+    "tag": "CRYPTOGRAPHY",
+    "title": "Constant-Time String Comparison for HMAC Verification",
+    "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
+    "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
+    "language": "javascript",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-917",
     "timestamp": "2026-09-04T20:46:50.223Z",
     "category": "DATABASE",
@@ -29,17 +40,6 @@
     "title": "Zero-Copy Buffer Slicing in High-Throughput Streams",
     "summary": "Avoid memory churn and garbage collection spikes by utilizing ArrayBuffer views over deep payload clones.",
     "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
-    "language": "javascript",
-    "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-837",
-    "timestamp": "2026-08-30T21:08:40.985Z",
-    "category": "SECURITY",
-    "tag": "CRYPTOGRAPHY",
-    "title": "Constant-Time String Comparison for HMAC Verification",
-    "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
-    "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
     "language": "javascript",
     "readTime": "2 MIN"
   },
