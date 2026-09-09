@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-965",
+    "timestamp": "2026-09-09T07:24:07.181Z",
+    "category": "DEVOPS",
+    "tag": "KUBERNETES",
+    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
+    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
+    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
+    "language": "yaml",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-996",
     "timestamp": "2026-09-08T21:11:08.462Z",
     "category": "PERFORMANCE",
@@ -42,17 +53,6 @@
     "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
     "language": "javascript",
     "readTime": "3 MIN"
-  },
-  {
-    "id": "DIG-959",
-    "timestamp": "2026-08-29T15:05:42.013Z",
-    "category": "DEVOPS",
-    "tag": "KUBERNETES",
-    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
-    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
-    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
-    "language": "yaml",
-    "readTime": "2 MIN"
   },
   {
     "id": "DIG-801",
