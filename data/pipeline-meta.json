@@ -1,18 +1,19 @@
 {
   "system": "DEVPULSE_TELEMETRY_ENGINE",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "status": "OPERATIONAL",
-  "lastSync": "2026-09-11T07:18:20.452Z",
-  "syncCycle": 432,
-  "commitBatchId": "BATCH-0826-01",
+  "lastSync": "2026-09-14T11:45:00.000Z",
+  "syncCycle": 401,
   "activeNodes": 6,
-  "streakDays": 42,
-  "telemetryHealth": 99.97,
+  "telemetryHealth": 99.98,
+  "schedule": {
+    "weekNumber": 38,
+    "activeDays": [1, 2, 4, 6]
+  },
   "config": {
-    "minCommitsPerCycle": 0,
-    "maxCommitsPerCycle": 4,
-    "skipProbability": 0.15,
-    "weekendModifier": 0.7,
+    "minCommitsPerCycle": 4,
+    "maxCommitsPerCycle": 25,
+    "weeklyActiveDaysTarget": 4,
     "conventionalCommitScopes": [
       "digest",
       "radar",

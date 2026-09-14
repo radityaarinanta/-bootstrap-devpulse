@@ -2,11 +2,11 @@ name: Data Pipeline & Content Sync
 
 on:
   schedule:
-    - cron: '15 2,10,18 * * *'
+    - cron: '25 3,11,19 * * *'
   workflow_dispatch:
     inputs:
       commit_target:
-        description: 'Manual commit count override (0-4)'
+        description: 'Manual commit count override (4-25)'
         required: false
         default: 'auto'
       author_email:

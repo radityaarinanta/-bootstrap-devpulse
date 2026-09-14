@@ -1,8 +1,3 @@
-/**
- * DevPulse Git Commit Engine
- * Formats industry-standard conventional commits and executes git commands cleanly.
- */
-
 import { execSync } from 'child_process';
 
 const CONVENTIONAL_TEMPLATES = {
@@ -42,15 +37,12 @@ export function getConventionalCommitMessage(scope) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-export function executeGitCommit(filePath, message, authorName, authorEmail) {
+export function executeGitCommit(filePath, message, authorName, authorEmail, commitDateIso = null) {
   try {
-    // Stage the specific file
     execSync(`git add "${filePath}"`, { stdio: 'pipe' });
     
-    // Check if there are staged changes
     const diff = execSync('git diff --staged', { encoding: 'utf-8' });
     if (!diff || diff.trim() === '') {
-      console.log(`[GIT_SKIP] No changes detected for ${filePath}`);
       return false;
     }
     
@@ -59,11 +51,16 @@ export function executeGitCommit(filePath, message, authorName, authorEmail) {
       commitCmd = `git -c user.name="${authorName}" -c user.email="${authorEmail}" commit -m "${message}"`;
     }
     
-    execSync(commitCmd, { stdio: 'pipe' });
-    console.log(`[GIT_COMMIT_OK] ${message} -> ${filePath}`);
+    const env = { ...process.env };
+    if (commitDateIso) {
+      env.GIT_AUTHOR_DATE = commitDateIso;
+      env.GIT_COMMITTER_DATE = commitDateIso;
+    }
+
+    execSync(commitCmd, { env, stdio: 'pipe' });
+    console.log(`[GIT_OK] ${message} -> ${filePath}`);
     return true;
   } catch (err) {
-    console.warn(`[GIT_COMMIT_WARN] ${err.message}`);
     return false;
   }
 }

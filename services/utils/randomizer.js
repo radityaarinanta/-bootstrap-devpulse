@@ -1,9 +1,3 @@
-/**
- * DevPulse Precision Randomizer Engine
- * Computes deterministic & randomized variances for commit frequencies,
- * telemetry jitters, and content generation.
- */
-
 export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -12,29 +6,69 @@ export function pickRandom(array) {
   return array[Math.floor(Math.random() * array.length)];
 }
 
-export function computeDailyCommitTarget(config = {}) {
-  const min = config.minCommitsPerCycle !== undefined ? config.minCommitsPerCycle : 1;
-  const max = config.maxCommitsPerCycle || 4;
-  const skipProbability = config.skipProbability !== undefined ? config.skipProbability : 0.15; // 15% default chance of rest day
-  
-  const today = new Date();
-  const dayOfWeek = today.getUTCDay(); // 0 = Sunday, 6 = Saturday
-  const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+export function getWeekNumber(d = new Date()) {
+  const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  const dayNum = date.getUTCDay() || 7;
+  date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+  return Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+}
 
-  // 1. Check for Organic Rest Day / Skip Day (Hari Kosong)
-  // Higher probability on weekends (30%), natural 12% on weekdays
-  const effectiveSkipChance = isWeekend ? Math.max(skipProbability, 0.30) : skipProbability;
-  if (Math.random() < effectiveSkipChance) {
-    console.log('[VARIANCE] Organic rest day triggered (0 commits today).');
-    return 0; // 0 commits = kotak kosong / abu-abu di GitHub
+export function evaluateWeeklySchedule(meta = {}) {
+  const now = new Date();
+  const weekNum = getWeekNumber(now);
+  const todayDay = now.getUTCDay();
+
+  let activeDays = meta.schedule?.activeDays;
+  const recordedWeek = meta.schedule?.weekNumber;
+
+  if (recordedWeek !== weekNum || !Array.isArray(activeDays) || activeDays.length !== 4) {
+    const allDays = [0, 1, 2, 3, 4, 5, 6];
+    const shuffled = allDays.sort(() => 0.5 - Math.random());
+    activeDays = shuffled.slice(0, 4).sort((a, b) => a - b);
   }
-  
-  // 2. Normal active day commit distribution (1 to 4 commits)
+
+  const isActiveToday = activeDays.includes(todayDay);
+
+  return {
+    isActiveToday,
+    activeDays,
+    weekNumber: weekNum,
+    todayDay
+  };
+}
+
+export function computeDynamicCommitVolume(overrideRange = null) {
+  if (overrideRange && typeof overrideRange === 'number') {
+    return overrideRange;
+  }
+
   const roll = Math.random();
-  if (roll < 0.25) return 1;       // 25% chance of 1 commit (hijau muda)
-  if (roll < 0.65) return 2;       // 40% chance of 2 commits (hijau muda-sedang)
-  if (roll < 0.90) return 3;       // 25% chance of 3 commits (hijau sedang)
-  return 4;                        // 10% chance of 4 commits (hijau pekat)
+  if (roll < 0.35) {
+    return getRandomInt(4, 8);
+  } else if (roll < 0.80) {
+    return getRandomInt(9, 16);
+  } else {
+    return getRandomInt(17, 25);
+  }
+}
+
+export function generateNaturalTimestampSequence(count, baseDate = new Date()) {
+  const timestamps = [];
+  const startHour = getRandomInt(7, 10);
+  const startMinute = getRandomInt(5, 30);
+
+  let current = new Date(baseDate);
+  current.setUTCHours(startHour, startMinute, getRandomInt(10, 50), 0);
+
+  for (let i = 0; i < count; i++) {
+    timestamps.push(current.toISOString());
+    const gapMinutes = getRandomInt(12, 45);
+    const gapSeconds = getRandomInt(10, 55);
+    current = new Date(current.getTime() + (gapMinutes * 60 * 1000) + (gapSeconds * 1000));
+  }
+
+  return timestamps;
 }
 
 export function getJitterDelayMs() {

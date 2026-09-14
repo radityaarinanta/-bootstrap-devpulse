@@ -2,7 +2,12 @@ import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { computeDailyCommitTarget, pickRandom } from './utils/randomizer.js';
+import { 
+  evaluateWeeklySchedule, 
+  computeDynamicCommitVolume, 
+  generateNaturalTimestampSequence, 
+  pickRandom 
+} from './utils/randomizer.js';
 import { getConventionalCommitMessage, executeGitCommit } from './utils/gitCommitHelper.js';
 import { generateDigestUpdate } from './generators/digestGenerator.js';
 import { updateRadarMetrics } from './generators/trendAnalyzer.js';
@@ -48,39 +53,37 @@ export async function runPipeline(options = {}) {
   console.log(`[TIMESTAMP]    ${new Date().toISOString()}`);
   console.log('====================================================');
 
-  const meta = readJson('pipeline-meta.json') || { syncCycle: 1, config: {} };
+  const meta = readJson('pipeline-meta.json') || { syncCycle: 1, schedule: {} };
   const authorName = options.authorName || process.env.GIT_AUTHOR_NAME || process.env.GITHUB_ACTOR || 'radityaarinanta';
   const authorEmail = options.authorEmail || process.env.GIT_AUTHOR_EMAIL || 'radittantra36@gmail.com';
   const autoCommit = options.autoCommit !== undefined ? options.autoCommit : true;
 
-  const commitTarget = options.commitCount !== undefined ? options.commitCount : computeDailyCommitTarget(meta.config);
-  console.log(`[ORCHESTRATOR] Selected commit variance target for today: ${commitTarget} commit(s)`);
+  const schedule = evaluateWeeklySchedule(meta);
+  meta.schedule = {
+    weekNumber: schedule.weekNumber,
+    activeDays: schedule.activeDays
+  };
 
-  if (commitTarget === 0) {
-    console.log('\n====================================================');
-    console.log('[SYS_REST_DAY] Rest day active. Skipping commits for natural pattern.');
+  const isManualOverride = options.commitCount !== undefined && options.commitCount !== null;
+
+  if (!schedule.isActiveToday && !isManualOverride) {
+    writeJson('pipeline-meta.json', meta);
+    console.log(`[SYS_REST_DAY] Telemetry rest cycle active today (Day ${schedule.todayDay}). Active week slots: [${schedule.activeDays.join(',')}]. Skipping.`);
     console.log('====================================================');
     return { success: true, commitCount: 0, isRestDay: true };
   }
 
-  const availableChannels = ['digest', 'radar', 'telemetry', 'resources', 'meta'];
-  const selectedChannels = [];
-  
-  for (let i = 0; i < commitTarget; i++) {
-    const remaining = availableChannels.filter(ch => !selectedChannels.includes(ch));
-    if (remaining.length > 0) {
-      selectedChannels.push(pickRandom(remaining));
-    } else {
-      selectedChannels.push('digest');
-    }
-  }
+  const commitTarget = computeDynamicCommitVolume(options.commitCount);
+  const timestamps = generateNaturalTimestampSequence(commitTarget);
+  console.log(`[ORCHESTRATOR] Target commit batch for today: ${commitTarget} commit(s)`);
 
+  const availableChannels = ['digest', 'radar', 'telemetry', 'resources', 'meta'];
   let executedCommits = 0;
   let lastMessage = 'chore(sync): automated pipeline cycle execution';
 
-  for (let i = 0; i < selectedChannels.length; i++) {
-    const channel = selectedChannels[i];
-    console.log(`\n[STEP ${i + 1}/${selectedChannels.length}] Processing channel: [${channel.toUpperCase()}]`);
+  for (let i = 0; i < commitTarget; i++) {
+    const channel = availableChannels[i % availableChannels.length];
+    const commitDate = timestamps[i] || new Date().toISOString();
 
     let targetFile = '';
     let commitScope = channel;
@@ -103,7 +106,7 @@ export async function runPipeline(options = {}) {
     } else if (channel === 'resources') {
       const current = readJson('resources.json') || [];
       if (current.length > 0) {
-        current[0].lastVerified = new Date().toISOString();
+        current[0].lastVerified = commitDate;
         writeJson('resources.json', current);
       }
       targetFile = 'data/resources.json';
@@ -112,28 +115,27 @@ export async function runPipeline(options = {}) {
     }
 
     meta.syncCycle = (meta.syncCycle || 100) + 1;
-    meta.lastSync = new Date().toISOString();
+    meta.lastSync = commitDate;
     writeJson('pipeline-meta.json', meta);
 
     if (autoCommit && targetFile) {
       const msg = getConventionalCommitMessage(commitScope);
       lastMessage = msg;
-      const commitSuccess = executeGitCommit(targetFile, msg, authorName, authorEmail);
+      const commitSuccess = executeGitCommit(targetFile, msg, authorName, authorEmail, commitDate);
       if (commitSuccess) executedCommits++;
     }
   }
 
   if (autoCommit && executedCommits === 0) {
-    executeGitCommit('data/pipeline-meta.json', 'chore(meta): synchronize system health records', authorName, authorEmail);
+    executeGitCommit('data/pipeline-meta.json', 'chore(meta): synchronize system health records', authorName, authorEmail, timestamps[0]);
   }
 
-  const shouldRunIssue = Math.random() < 0.20;
+  const shouldRunIssue = Math.random() < 0.15;
   if (process.env.GITHUB_ACTIONS === 'true' && shouldRunIssue) {
     handleAutomatedIssue(lastMessage);
   }
 
-  console.log('\n====================================================');
-  console.log(`[SYS_OK] Pipeline cycle completed. Total commits created: ${executedCommits}`);
+  console.log(`[SYS_OK] Pipeline cycle completed. Commits created: ${executedCommits}`);
   console.log('====================================================');
   return { success: true, commitCount: executedCommits };
 }
