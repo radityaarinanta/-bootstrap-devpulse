@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-991",
+    "timestamp": "2026-09-17T08:47:08.228Z",
+    "category": "DEVOPS",
+    "tag": "KUBERNETES",
+    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
+    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
+    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
+    "language": "yaml",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-813",
     "timestamp": "2026-09-17T08:47:08.162Z",
     "category": "DATABASE",
@@ -19,17 +30,6 @@
     "summary": "Avoid memory churn and garbage collection spikes by utilizing ArrayBuffer views over deep payload clones.",
     "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
     "language": "javascript",
-    "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-944",
-    "timestamp": "2026-09-15T22:22:28.856Z",
-    "category": "DEVOPS",
-    "tag": "KUBERNETES",
-    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
-    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
-    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
-    "language": "yaml",
     "readTime": "2 MIN"
   },
   {
