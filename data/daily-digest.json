@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-992",
+    "timestamp": "2026-09-19T14:34:24.849Z",
+    "category": "ARCH_PATTERN",
+    "tag": "SYSTEM_DESIGN",
+    "title": "Circuit Breaker State Machine with Exponential Fallback",
+    "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
+    "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
+    "language": "javascript",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-860",
     "timestamp": "2026-09-19T14:34:24.777Z",
     "category": "DATABASE",
@@ -20,17 +31,6 @@
     "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
     "language": "javascript",
     "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-858",
-    "timestamp": "2026-09-19T08:10:45.946Z",
-    "category": "ARCH_PATTERN",
-    "tag": "SYSTEM_DESIGN",
-    "title": "Circuit Breaker State Machine with Exponential Fallback",
-    "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
-    "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
-    "language": "javascript",
-    "readTime": "3 MIN"
   },
   {
     "id": "DIG-865",
