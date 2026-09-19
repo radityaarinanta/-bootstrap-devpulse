@@ -3,28 +3,28 @@
     "service": "GITHUB_API_REST",
     "endpoint": "https://api.github.com/zen",
     "status": "OPERATIONAL",
-    "latencyMs": 30,
+    "latencyMs": 24,
     "uptimePercent": 99.98,
     "region": "GLOBAL_EDGE",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   },
   {
     "service": "CLOUDFLARE_EDGE_DNS",
     "endpoint": "https://1.1.1.1/dns-query",
     "status": "OPERATIONAL",
-    "latencyMs": 12,
+    "latencyMs": 22,
     "uptimePercent": 99.99,
     "region": "ANYCAST",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   },
   {
     "service": "NPM_REGISTRY",
     "endpoint": "https://registry.npmjs.org/-/ping",
     "status": "OPERATIONAL",
-    "latencyMs": 36,
+    "latencyMs": 31,
     "uptimePercent": 99.95,
     "region": "US_EAST",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   },
   {
     "service": "SUPABASE_EDGE",
@@ -33,24 +33,24 @@
     "latencyMs": 52,
     "uptimePercent": 99.92,
     "region": "EU_CENTRAL",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   },
   {
     "service": "OPENAI_GATEWAY",
     "endpoint": "https://status.openai.com/api/v2/status.json",
     "status": "OPERATIONAL",
-    "latencyMs": 80,
+    "latencyMs": 87,
     "uptimePercent": 99.89,
     "region": "US_WEST",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   },
   {
     "service": "GOOGLE_DNS_HTTPS",
     "endpoint": "https://dns.google/resolve",
     "status": "OPERATIONAL",
-    "latencyMs": 15,
+    "latencyMs": 11,
     "uptimePercent": 99.99,
     "region": "GLOBAL_ANYCAST",
-    "lastChecked": "2026-09-17T22:17:42.065Z"
+    "lastChecked": "2026-09-19T08:10:45.782Z"
   }
 ]
