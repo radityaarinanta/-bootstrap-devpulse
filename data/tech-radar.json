@@ -3,32 +3,32 @@
     "quadrant": "LANGUAGES & FRAMEWORKS",
     "name": "Rust for Tooling (Oxlint/Rspack)",
     "ring": "ADOPT",
-    "confidence": 99,
-    "trend": "+13.3%",
+    "confidence": 97,
+    "trend": "+13.6%",
     "description": "High-throughput, memory-safe native CLI engines replacing legacy JavaScript bundle toolchains."
   },
   {
     "quadrant": "DATA STORES",
     "name": "DuckDB Embedded Analytics",
     "ring": "ADOPT",
-    "confidence": 99,
-    "trend": "+19.7%",
+    "confidence": 97,
+    "trend": "+20.0%",
     "description": "Fast in-process columnar SQL engine optimized for client-side analytical queries and edge ETL."
   },
   {
     "quadrant": "ARCHITECTURE",
     "name": "Local-First Sync Engines",
     "ring": "TRIAL",
-    "confidence": 99,
-    "trend": "+25.5%",
+    "confidence": 98,
+    "trend": "+25.3%",
     "description": "CRDT-backed client-side state synchronized bi-directionally over WebSockets and WebRTC."
   },
   {
     "quadrant": "INFRASTRUCTURE",
     "name": "WASM Edge Micro-Workers",
     "ring": "TRIAL",
-    "confidence": 97,
-    "trend": "+17.1%",
+    "confidence": 96,
+    "trend": "+16.8%",
     "description": "Sub-millisecond cold start compute sandboxes powered by WebAssembly runtimes."
   },
   {
@@ -36,7 +36,7 @@
     "name": "OpenTelemetry Native Tracing",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+11.9%",
+    "trend": "+11.7%",
     "description": "Unified vendor-neutral standard for logs, metrics, and distributed spans."
   },
   {
