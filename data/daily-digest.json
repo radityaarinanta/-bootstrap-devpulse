@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-876",
+    "timestamp": "2026-09-23T15:29:26.087Z",
+    "category": "DATABASE",
+    "tag": "POSTGRES_SQL",
+    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
+    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
+    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
+    "language": "sql",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-827",
     "timestamp": "2026-09-23T15:29:26.041Z",
     "category": "SECURITY",
@@ -30,17 +41,6 @@
     "summary": "Prevent cascading microservice failures by isolating transient endpoint degradation with an automated recovery probe cycle.",
     "code": "class CircuitBreaker {\n  constructor(timeout = 3000, threshold = 5) {\n    this.failureCount = 0;\n    this.threshold = threshold;\n    this.state = 'CLOSED'; // CLOSED | OPEN | HALF_OPEN\n    this.nextAttempt = Date.now();\n  }\n  async exec(fn) {\n    if (this.state === 'OPEN' && Date.now() < this.nextAttempt) {\n      throw new Error('[CIRCUIT_OPEN] Request fast-failed');\n    }\n    try {\n      const res = await fn();\n      this.reset();\n      return res;\n    } catch (err) {\n      this.recordFailure();\n      throw err;\n    }\n  }\n}",
     "language": "javascript",
-    "readTime": "3 MIN"
-  },
-  {
-    "id": "DIG-927",
-    "timestamp": "2026-09-22T22:20:36.938Z",
-    "category": "DATABASE",
-    "tag": "POSTGRES_SQL",
-    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
-    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
-    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
-    "language": "sql",
     "readTime": "3 MIN"
   },
   {
