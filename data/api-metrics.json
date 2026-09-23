@@ -6,34 +6,34 @@
     "latencyMs": 38,
     "uptimePercent": 99.98,
     "region": "GLOBAL_EDGE",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   },
   {
     "service": "CLOUDFLARE_EDGE_DNS",
     "endpoint": "https://1.1.1.1/dns-query",
     "status": "OPERATIONAL",
-    "latencyMs": 17,
+    "latencyMs": 20,
     "uptimePercent": 99.99,
     "region": "ANYCAST",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   },
   {
     "service": "NPM_REGISTRY",
     "endpoint": "https://registry.npmjs.org/-/ping",
     "status": "OPERATIONAL",
-    "latencyMs": 25,
+    "latencyMs": 28,
     "uptimePercent": 99.95,
     "region": "US_EAST",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   },
   {
     "service": "SUPABASE_EDGE",
     "endpoint": "https://api.supabase.com/v1/health",
     "status": "OPERATIONAL",
-    "latencyMs": 54,
+    "latencyMs": 45,
     "uptimePercent": 99.92,
     "region": "EU_CENTRAL",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   },
   {
     "service": "OPENAI_GATEWAY",
@@ -42,15 +42,15 @@
     "latencyMs": 81,
     "uptimePercent": 99.89,
     "region": "US_WEST",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   },
   {
     "service": "GOOGLE_DNS_HTTPS",
     "endpoint": "https://dns.google/resolve",
     "status": "OPERATIONAL",
-    "latencyMs": 9,
+    "latencyMs": 14,
     "uptimePercent": 99.99,
     "region": "GLOBAL_ANYCAST",
-    "lastChecked": "2026-09-23T15:29:26.060Z"
+    "lastChecked": "2026-09-23T22:23:37.904Z"
   }
 ]
