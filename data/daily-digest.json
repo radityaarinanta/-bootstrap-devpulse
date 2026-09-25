@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-890",
+    "timestamp": "2026-09-25T08:58:01.186Z",
+    "category": "DATABASE",
+    "tag": "POSTGRES_SQL",
+    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
+    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
+    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
+    "language": "sql",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-895",
     "timestamp": "2026-09-25T08:58:01.119Z",
     "category": "ARCH_PATTERN",
@@ -20,17 +31,6 @@
     "code": "// Process binary telemetry frame without allocating new heap memory\nfunction parseFrameHeader(buffer, offset = 0) {\n  const view = new DataView(buffer, offset, 16);\n  return {\n    magic: view.getUint32(0, false),\n    packetId: view.getUint16(4, false),\n    payloadLength: view.getUint32(6, false),\n    timestamp: Number(view.getBigUint64(8, false))\n  };\n}",
     "language": "javascript",
     "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-960",
-    "timestamp": "2026-09-23T22:23:37.946Z",
-    "category": "DATABASE",
-    "tag": "POSTGRES_SQL",
-    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
-    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
-    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
-    "language": "sql",
-    "readTime": "3 MIN"
   },
   {
     "id": "DIG-827",
