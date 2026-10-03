@@ -4,23 +4,23 @@
     "name": "Rust for Tooling (Oxlint/Rspack)",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+13.8%",
+    "trend": "+13.6%",
     "description": "High-throughput, memory-safe native CLI engines replacing legacy JavaScript bundle toolchains."
   },
   {
     "quadrant": "DATA STORES",
     "name": "DuckDB Embedded Analytics",
     "ring": "ADOPT",
-    "confidence": 99,
-    "trend": "+20.4%",
+    "confidence": 97,
+    "trend": "+20.2%",
     "description": "Fast in-process columnar SQL engine optimized for client-side analytical queries and edge ETL."
   },
   {
     "quadrant": "ARCHITECTURE",
     "name": "Local-First Sync Engines",
     "ring": "TRIAL",
-    "confidence": 99,
-    "trend": "+24.2%",
+    "confidence": 98,
+    "trend": "+24.0%",
     "description": "CRDT-backed client-side state synchronized bi-directionally over WebSockets and WebRTC."
   },
   {
@@ -28,7 +28,7 @@
     "name": "WASM Edge Micro-Workers",
     "ring": "TRIAL",
     "confidence": 97,
-    "trend": "+16.6%",
+    "trend": "+16.2%",
     "description": "Sub-millisecond cold start compute sandboxes powered by WebAssembly runtimes."
   },
   {
@@ -36,7 +36,7 @@
     "name": "OpenTelemetry Native Tracing",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+11.1%",
+    "trend": "+10.8%",
     "description": "Unified vendor-neutral standard for logs, metrics, and distributed spans."
   },
   {
@@ -44,7 +44,7 @@
     "name": "Passkeys & WebAuthn Level 3",
     "ring": "ADOPT",
     "confidence": 98,
-    "trend": "+31.6%",
+    "trend": "+32.0%",
     "description": "Hardware-bound cryptographic credentials completely deprecating SMS and email OTP."
   }
 ]
