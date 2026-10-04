@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-928",
+    "timestamp": "2026-10-04T15:52:58.941Z",
+    "category": "DATABASE",
+    "tag": "POSTGRES_SQL",
+    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
+    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
+    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
+    "language": "sql",
+    "readTime": "3 MIN"
+  },
+  {
     "id": "DIG-901",
     "timestamp": "2026-10-04T09:58:07.636Z",
     "category": "PERFORMANCE",
@@ -42,17 +53,6 @@
     "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
     "language": "yaml",
     "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-970",
-    "timestamp": "2026-10-02T09:56:30.223Z",
-    "category": "DATABASE",
-    "tag": "POSTGRES_SQL",
-    "title": "Concurrent Materialized View Refresh with Zero Table Locks",
-    "summary": "Maintain real-time analytical reporting views without blocking active read/write transactions.",
-    "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
-    "language": "sql",
-    "readTime": "3 MIN"
   },
   {
     "id": "DIG-801",
