@@ -12,7 +12,7 @@
     "name": "DuckDB Embedded Analytics",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+20.4%",
+    "trend": "+20.3%",
     "description": "Fast in-process columnar SQL engine optimized for client-side analytical queries and edge ETL."
   },
   {
@@ -20,7 +20,7 @@
     "name": "Local-First Sync Engines",
     "ring": "TRIAL",
     "confidence": 99,
-    "trend": "+24.2%",
+    "trend": "+24.4%",
     "description": "CRDT-backed client-side state synchronized bi-directionally over WebSockets and WebRTC."
   },
   {
@@ -28,15 +28,15 @@
     "name": "WASM Edge Micro-Workers",
     "ring": "TRIAL",
     "confidence": 99,
-    "trend": "+15.6%",
+    "trend": "+15.7%",
     "description": "Sub-millisecond cold start compute sandboxes powered by WebAssembly runtimes."
   },
   {
     "quadrant": "DEVOPS",
     "name": "OpenTelemetry Native Tracing",
     "ring": "ADOPT",
-    "confidence": 96,
-    "trend": "+10.6%",
+    "confidence": 95,
+    "trend": "+10.3%",
     "description": "Unified vendor-neutral standard for logs, metrics, and distributed spans."
   },
   {
