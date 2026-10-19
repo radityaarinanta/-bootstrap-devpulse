@@ -11,7 +11,7 @@
     "quadrant": "DATA STORES",
     "name": "DuckDB Embedded Analytics",
     "ring": "ADOPT",
-    "confidence": 96,
+    "confidence": 99,
     "trend": "+20.9%",
     "description": "Fast in-process columnar SQL engine optimized for client-side analytical queries and edge ETL."
   },
@@ -19,24 +19,24 @@
     "quadrant": "ARCHITECTURE",
     "name": "Local-First Sync Engines",
     "ring": "TRIAL",
-    "confidence": 95,
-    "trend": "+23.5%",
+    "confidence": 97,
+    "trend": "+23.9%",
     "description": "CRDT-backed client-side state synchronized bi-directionally over WebSockets and WebRTC."
   },
   {
     "quadrant": "INFRASTRUCTURE",
     "name": "WASM Edge Micro-Workers",
     "ring": "TRIAL",
-    "confidence": 98,
-    "trend": "+14.6%",
+    "confidence": 99,
+    "trend": "+14.7%",
     "description": "Sub-millisecond cold start compute sandboxes powered by WebAssembly runtimes."
   },
   {
     "quadrant": "DEVOPS",
     "name": "OpenTelemetry Native Tracing",
     "ring": "ADOPT",
-    "confidence": 98,
-    "trend": "+8.4%",
+    "confidence": 96,
+    "trend": "+8.2%",
     "description": "Unified vendor-neutral standard for logs, metrics, and distributed spans."
   },
   {
@@ -44,7 +44,7 @@
     "name": "Passkeys & WebAuthn Level 3",
     "ring": "ADOPT",
     "confidence": 98,
-    "trend": "+33.7%",
+    "trend": "+33.6%",
     "description": "Hardware-bound cryptographic credentials completely deprecating SMS and email OTP."
   }
 ]
