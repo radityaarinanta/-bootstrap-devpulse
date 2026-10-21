@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-973",
+    "timestamp": "2026-10-21T08:45:02.470Z",
+    "category": "DEVOPS",
+    "tag": "KUBERNETES",
+    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
+    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
+    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
+    "language": "yaml",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-847",
     "timestamp": "2026-10-21T08:45:01.903Z",
     "category": "ARCH_PATTERN",
@@ -20,17 +31,6 @@
     "code": "-- Setup unique index requirement for concurrent refresh\nCREATE UNIQUE INDEX IF NOT EXISTS idx_telemetry_summary_uid \nON mv_telemetry_hourly_summary (bucket_hour, service_id);\n\n-- Refresh asynchronously without acquiring EXCLUSIVE lock\nREFRESH MATERIALIZED VIEW CONCURRENTLY mv_telemetry_hourly_summary;",
     "language": "sql",
     "readTime": "3 MIN"
-  },
-  {
-    "id": "DIG-858",
-    "timestamp": "2026-10-20T22:27:29.036Z",
-    "category": "DEVOPS",
-    "tag": "KUBERNETES",
-    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
-    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
-    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
-    "language": "yaml",
-    "readTime": "2 MIN"
   },
   {
     "id": "DIG-897",
