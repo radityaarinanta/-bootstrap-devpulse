@@ -1,7 +1,7 @@
 [
   {
-    "id": "DIG-871",
-    "timestamp": "2026-10-31T09:50:39.032Z",
+    "id": "DIG-850",
+    "timestamp": "2026-10-31T09:50:39.097Z",
     "category": "ARCH_PATTERN",
     "tag": "SYSTEM_DESIGN",
     "title": "Circuit Breaker State Machine with Exponential Fallback",
