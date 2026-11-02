@@ -2,17 +2,17 @@
   "system": "DEVPULSE_TELEMETRY_ENGINE",
   "version": "1.5.0",
   "status": "OPERATIONAL",
-  "lastSync": "2026-10-31T13:31:11.000Z",
-  "syncCycle": 2505,
+  "lastSync": "2026-11-02T12:53:35.000Z",
+  "syncCycle": 2510,
   "activeNodes": 6,
   "telemetryHealth": 99.98,
   "schedule": {
-    "weekNumber": 44,
+    "weekNumber": 45,
     "activeDays": [
+      0,
       1,
-      2,
-      5,
-      6
+      3,
+      5
     ]
   },
   "config": {
