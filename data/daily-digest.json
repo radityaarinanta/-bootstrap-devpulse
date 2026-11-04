@@ -1,5 +1,16 @@
 [
   {
+    "id": "DIG-888",
+    "timestamp": "2026-11-04T11:18:53.980Z",
+    "category": "DEVOPS",
+    "tag": "KUBERNETES",
+    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
+    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
+    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
+    "language": "yaml",
+    "readTime": "2 MIN"
+  },
+  {
     "id": "DIG-873",
     "timestamp": "2026-11-04T00:02:09.652Z",
     "category": "DATABASE",
@@ -41,17 +52,6 @@
     "summary": "Mitigate timing attack vulnerabilities when authenticating webhooks and cryptographic signatures.",
     "code": "import crypto from 'node:crypto';\n\nexport function verifyWebhookSignature(payload, signature, secret) {\n  const computed = crypto.createHmac('sha256', secret).update(payload).digest('hex');\n  const bufferA = Buffer.from(computed, 'utf8');\n  const bufferB = Buffer.from(signature, 'utf8');\n  \n  if (bufferA.length !== bufferB.length) return false;\n  return crypto.timingSafeEqual(bufferA, bufferB);\n}",
     "language": "javascript",
-    "readTime": "2 MIN"
-  },
-  {
-    "id": "DIG-822",
-    "timestamp": "2026-10-31T16:12:17.238Z",
-    "category": "DEVOPS",
-    "tag": "KUBERNETES",
-    "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
-    "summary": "Ensure in-flight HTTP requests complete before SIGKILL termination during automated rollouts.",
-    "code": "lifecycle:\n  preStop:\n    exec:\n      command: [\"/bin/sh\", \"-c\", \"sleep 15 && /app/shutdown --graceful\"]\nterminationGracePeriodSeconds: 45",
-    "language": "yaml",
     "readTime": "2 MIN"
   },
   {
