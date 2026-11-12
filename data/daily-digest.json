@@ -1,7 +1,7 @@
 [
   {
-    "id": "DIG-890",
-    "timestamp": "2026-11-12T11:33:48.559Z",
+    "id": "DIG-836",
+    "timestamp": "2026-11-12T11:33:48.607Z",
     "category": "DEVOPS",
     "tag": "KUBERNETES",
     "title": "Graceful PreStop Lifecycle Hooks for Zero-Downtime Drains",
