@@ -4,7 +4,7 @@
     "name": "Rust for Tooling (Oxlint/Rspack)",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+15.3%",
+    "trend": "+14.9%",
     "description": "High-throughput, memory-safe native CLI engines replacing legacy JavaScript bundle toolchains."
   },
   {
@@ -20,15 +20,15 @@
     "name": "Local-First Sync Engines",
     "ring": "TRIAL",
     "confidence": 99,
-    "trend": "+26.0%",
+    "trend": "+26.3%",
     "description": "CRDT-backed client-side state synchronized bi-directionally over WebSockets and WebRTC."
   },
   {
     "quadrant": "INFRASTRUCTURE",
     "name": "WASM Edge Micro-Workers",
     "ring": "TRIAL",
-    "confidence": 96,
-    "trend": "+13.8%",
+    "confidence": 95,
+    "trend": "+13.5%",
     "description": "Sub-millisecond cold start compute sandboxes powered by WebAssembly runtimes."
   },
   {
@@ -36,15 +36,15 @@
     "name": "OpenTelemetry Native Tracing",
     "ring": "ADOPT",
     "confidence": 99,
-    "trend": "+8.0%",
+    "trend": "+7.8%",
     "description": "Unified vendor-neutral standard for logs, metrics, and distributed spans."
   },
   {
     "quadrant": "SECURITY",
     "name": "Passkeys & WebAuthn Level 3",
     "ring": "ADOPT",
-    "confidence": 97,
-    "trend": "+37.9%",
+    "confidence": 95,
+    "trend": "+38.2%",
     "description": "Hardware-bound cryptographic credentials completely deprecating SMS and email OTP."
   }
 ]
